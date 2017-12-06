@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<config>
+  <map>
+    <key>0</key>
+    <value>ZhongJiaModbusApp.Entities.AlarmEntity</value>
+  </map>
+  <map>
+    <key>1</key>
+    <value>ZhongJiaModbusApp.Entities.AIEntity</value>
+  </map>
+</config>
