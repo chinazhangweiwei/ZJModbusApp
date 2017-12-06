@@ -142,7 +142,7 @@ namespace ZJModbus.App
                 entity.TheFuelType,entity.TheMediumType,entity.TheRunStatus,entity.TheSettingStutus,entity.Now);
         }
 
-        public void SetCtls(AlEmtity entity)
+        public void SetCtls(AIEntity entity)
         {
             throw new NotImplementedException();
         }
@@ -163,6 +163,11 @@ namespace ZJModbus.App
         }
 
         public void SetCtls(AlarmEntity entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Type getEntityType(int dataType)
         {
             throw new NotImplementedException();
         }

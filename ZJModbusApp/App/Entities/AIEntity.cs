@@ -1,13 +1,10 @@
-﻿
-
-
-using System;
+﻿using System;
 using ZJModbus.App.Attributes;
 
 
 namespace ZJModbus.App.Entities
 {
-    public class AlEmtity
+    public class AIEntity
     {
         private int bentipaiyanwendu;
         [Description(Name = "本体排烟温度", Unit = "℃")]

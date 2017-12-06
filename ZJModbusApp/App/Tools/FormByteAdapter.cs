@@ -10,9 +10,10 @@ namespace ZJModbus.App.Tools
     {
         public interface SetFormCtls
         {
+            Type getEntityType(int dataType);
             void SetCtls(BaseStatusEntity entity);
 
-            void SetCtls(AlEmtity entity);
+            void SetCtls(AIEntity entity);
 
             void SetCtls(AOEntity entity);
 
@@ -22,36 +23,21 @@ namespace ZJModbus.App.Tools
 
             void SetCtls(AlarmEntity entity);
         }
-
-        private static Type GetFormAdapterConfig(string key)
-        {
-            XmlDocument doc = new XmlDocument();
-            doc.Load(Application.StartupPath+ "\\FormAdapterConfig.xml");
-            foreach(XmlElement node in doc.DocumentElement.ChildNodes)
-            {
-                if (node.FirstChild.InnerText.Equals(key))
-                {
-                    return Type.GetType(node.LastChild.InnerText);
-                }
-            }
-            return null;
-        }
         
         public static void Adapter(int dataType, byte[] data, SetFormCtls action)
         {
-            Type type = GetFormAdapterConfig(dataType.ToString());
-            if(null != type)
+            if (null != action)
             {
-                Type adapterType = typeof(ByteAdapter<>);
-                adapterType = adapterType.MakeGenericType(type);
-                object o = Activator.CreateInstance(adapterType);
-                object result = adapterType.InvokeMember("GetData", BindingFlags.Default | BindingFlags.InvokeMethod, null, o, new object[] { data });
-                if (null != action)
+                Type type =action.getEntityType(dataType);
+                if (null != type)
                 {
+                    Type adapterType = typeof(ByteAdapter<>);
+                    adapterType = adapterType.MakeGenericType(type);
+                    object o = Activator.CreateInstance(adapterType);
+                    object result = adapterType.InvokeMember("GetData", BindingFlags.Default | BindingFlags.InvokeMethod, null, o, new object[] { data });
                     action.GetType().InvokeMember("SetCtls", BindingFlags.Default | BindingFlags.InvokeMethod, null, action, new object[] { result });
                 }
             }
         }
-        
     }
 }
