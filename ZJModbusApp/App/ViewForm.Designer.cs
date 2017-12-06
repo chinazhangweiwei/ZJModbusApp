@@ -38,27 +38,31 @@
             this.LV_AI = new System.Windows.Forms.ListView();
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.Sport = new System.IO.Ports.SerialPort(this.components);
             this.Page_DI = new System.Windows.Forms.TabPage();
-            this.Page_AO = new System.Windows.Forms.TabPage();
-            this.Page_DO = new System.Windows.Forms.TabPage();
-            this.Page_Setting = new System.Windows.Forms.TabPage();
-            this.Page_BaseStatus = new System.Windows.Forms.TabPage();
             this.LV_DI = new System.Windows.Forms.ListView();
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.Page_AO = new System.Windows.Forms.TabPage();
             this.LV_AO = new System.Windows.Forms.ListView();
             this.columnHeader7 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader8 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.Page_DO = new System.Windows.Forms.TabPage();
             this.LV_DO = new System.Windows.Forms.ListView();
             this.columnHeader9 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader10 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.Page_Setting = new System.Windows.Forms.TabPage();
+            this.Page_BaseStatus = new System.Windows.Forms.TabPage();
+            this.Sport = new System.IO.Ports.SerialPort(this.components);
+            this.LV_Base = new System.Windows.Forms.ListView();
+            this.columnHeader11 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader12 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tabControl1.SuspendLayout();
             this.Page_Alarm.SuspendLayout();
             this.Page_AI.SuspendLayout();
             this.Page_DI.SuspendLayout();
             this.Page_AO.SuspendLayout();
             this.Page_DO.SuspendLayout();
+            this.Page_BaseStatus.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -162,46 +166,6 @@
             this.Page_DI.Text = "开关量输入信号（DI）";
             this.Page_DI.UseVisualStyleBackColor = true;
             // 
-            // Page_AO
-            // 
-            this.Page_AO.Controls.Add(this.LV_AO);
-            this.Page_AO.Location = new System.Drawing.Point(4, 22);
-            this.Page_AO.Name = "Page_AO";
-            this.Page_AO.Padding = new System.Windows.Forms.Padding(3);
-            this.Page_AO.Size = new System.Drawing.Size(1107, 305);
-            this.Page_AO.TabIndex = 3;
-            this.Page_AO.Text = "模拟量输出信号（AO）";
-            this.Page_AO.UseVisualStyleBackColor = true;
-            // 
-            // Page_DO
-            // 
-            this.Page_DO.Controls.Add(this.LV_DO);
-            this.Page_DO.Location = new System.Drawing.Point(4, 22);
-            this.Page_DO.Name = "Page_DO";
-            this.Page_DO.Size = new System.Drawing.Size(1107, 305);
-            this.Page_DO.TabIndex = 4;
-            this.Page_DO.Text = "开关量输出信号（DO）";
-            this.Page_DO.UseVisualStyleBackColor = true;
-            // 
-            // Page_Setting
-            // 
-            this.Page_Setting.Location = new System.Drawing.Point(4, 22);
-            this.Page_Setting.Name = "Page_Setting";
-            this.Page_Setting.Size = new System.Drawing.Size(1107, 305);
-            this.Page_Setting.TabIndex = 5;
-            this.Page_Setting.Text = "设定参数";
-            this.Page_Setting.UseVisualStyleBackColor = true;
-            // 
-            // Page_BaseStatus
-            // 
-            this.Page_BaseStatus.Location = new System.Drawing.Point(4, 22);
-            this.Page_BaseStatus.Name = "Page_BaseStatus";
-            this.Page_BaseStatus.Padding = new System.Windows.Forms.Padding(3);
-            this.Page_BaseStatus.Size = new System.Drawing.Size(1107, 305);
-            this.Page_BaseStatus.TabIndex = 6;
-            this.Page_BaseStatus.Text = "基本状态信息";
-            this.Page_BaseStatus.UseVisualStyleBackColor = true;
-            // 
             // LV_DI
             // 
             this.LV_DI.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
@@ -224,6 +188,17 @@
             // columnHeader4
             // 
             this.columnHeader4.Text = "值";
+            // 
+            // Page_AO
+            // 
+            this.Page_AO.Controls.Add(this.LV_AO);
+            this.Page_AO.Location = new System.Drawing.Point(4, 22);
+            this.Page_AO.Name = "Page_AO";
+            this.Page_AO.Padding = new System.Windows.Forms.Padding(3);
+            this.Page_AO.Size = new System.Drawing.Size(1107, 305);
+            this.Page_AO.TabIndex = 3;
+            this.Page_AO.Text = "模拟量输出信号（AO）";
+            this.Page_AO.UseVisualStyleBackColor = true;
             // 
             // LV_AO
             // 
@@ -248,6 +223,16 @@
             // 
             this.columnHeader8.Text = "值";
             // 
+            // Page_DO
+            // 
+            this.Page_DO.Controls.Add(this.LV_DO);
+            this.Page_DO.Location = new System.Drawing.Point(4, 22);
+            this.Page_DO.Name = "Page_DO";
+            this.Page_DO.Size = new System.Drawing.Size(1107, 305);
+            this.Page_DO.TabIndex = 4;
+            this.Page_DO.Text = "开关量输出信号（DO）";
+            this.Page_DO.UseVisualStyleBackColor = true;
+            // 
             // LV_DO
             // 
             this.LV_DO.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
@@ -271,6 +256,50 @@
             // 
             this.columnHeader10.Text = "值";
             // 
+            // Page_Setting
+            // 
+            this.Page_Setting.Location = new System.Drawing.Point(4, 22);
+            this.Page_Setting.Name = "Page_Setting";
+            this.Page_Setting.Size = new System.Drawing.Size(1107, 305);
+            this.Page_Setting.TabIndex = 5;
+            this.Page_Setting.Text = "设定参数";
+            this.Page_Setting.UseVisualStyleBackColor = true;
+            // 
+            // Page_BaseStatus
+            // 
+            this.Page_BaseStatus.Controls.Add(this.LV_Base);
+            this.Page_BaseStatus.Location = new System.Drawing.Point(4, 22);
+            this.Page_BaseStatus.Name = "Page_BaseStatus";
+            this.Page_BaseStatus.Padding = new System.Windows.Forms.Padding(3);
+            this.Page_BaseStatus.Size = new System.Drawing.Size(1107, 305);
+            this.Page_BaseStatus.TabIndex = 6;
+            this.Page_BaseStatus.Text = "基本状态信息";
+            this.Page_BaseStatus.UseVisualStyleBackColor = true;
+            // 
+            // LV_Base
+            // 
+            this.LV_Base.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader11,
+            this.columnHeader12});
+            this.LV_Base.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.LV_Base.GridLines = true;
+            this.LV_Base.Location = new System.Drawing.Point(3, 3);
+            this.LV_Base.Name = "LV_Base";
+            this.LV_Base.Size = new System.Drawing.Size(1101, 299);
+            this.LV_Base.TabIndex = 3;
+            this.LV_Base.UseCompatibleStateImageBehavior = false;
+            this.LV_Base.View = System.Windows.Forms.View.Details;
+            // 
+            // columnHeader11
+            // 
+            this.columnHeader11.Text = "项目";
+            this.columnHeader11.Width = 300;
+            // 
+            // columnHeader12
+            // 
+            this.columnHeader12.Text = "值";
+            this.columnHeader12.Width = 200;
+            // 
             // ViewForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -286,6 +315,7 @@
             this.Page_DI.ResumeLayout(false);
             this.Page_AO.ResumeLayout(false);
             this.Page_DO.ResumeLayout(false);
+            this.Page_BaseStatus.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -316,5 +346,8 @@
         private System.Windows.Forms.ListView LV_DO;
         private System.Windows.Forms.ColumnHeader columnHeader9;
         private System.Windows.Forms.ColumnHeader columnHeader10;
+        private System.Windows.Forms.ListView LV_Base;
+        private System.Windows.Forms.ColumnHeader columnHeader11;
+        private System.Windows.Forms.ColumnHeader columnHeader12;
     }
 }

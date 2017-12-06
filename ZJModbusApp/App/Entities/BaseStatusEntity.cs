@@ -7,29 +7,29 @@ namespace ZJModbus.App.Entities
     {
         public enum FuelType
         {
-            Gas = 0,
-            Electric = 1,
-            Coal = 2,
-            Biomass = 3
+            油气 = 0,
+            电 = 1,
+            煤 = 2,
+            生物质 = 3
         }
         public enum MediumType
         {
-            Water = 0,
-            Steam = 1,
-            Oil = 2
+            热水 = 0,
+            蒸汽 = 1,
+            导热油 = 2
         }
         public enum RunStatus
         {
-            Closed = 0,
-            Waiting = 1,
-            Runing = 2,
-            Alarming = 3
+            关机 = 0,
+            待机 = 1,
+            运行 = 2,
+            报警 = 3
         }
         private int theFuelType, theMediumType, theRunStatus, theSettingStutus;
         public enum SettingStutus
         {
-            NotSet = 0,
-            Set = 1
+            非设定状态 = 0,
+            设定状态 = 1
         }
 
         [Byte(ByteIndex = 0)]
@@ -37,6 +37,7 @@ namespace ZJModbus.App.Entities
         {
             theFuelType = data;
         }
+        [Description(Name = "燃料类型")]
         public FuelType TheFuelType { get { return (FuelType)theFuelType; } }
 
         [Byte(ByteIndex = 1)]
@@ -44,6 +45,7 @@ namespace ZJModbus.App.Entities
         {
             theMediumType = data;
         }
+        [Description(Name = "介质类型")]
         public MediumType TheMediumType { get { return (MediumType)theMediumType; } }
 
         [Byte(ByteIndex = 2)]
@@ -51,12 +53,14 @@ namespace ZJModbus.App.Entities
         {
             theRunStatus = data;
         }
+        [Description(Name = "运行状态")]
         public RunStatus TheRunStatus { get { return (RunStatus)theRunStatus; } }
         [Byte(ByteIndex = 3)]
         public void SetSettingStutus(int data)
         {
             theSettingStutus = data;
         }
+        [Description(Name = "设定状态")]
         public SettingStutus TheSettingStutus { get { return (SettingStutus)theSettingStutus; } }
 
 
@@ -91,8 +95,10 @@ namespace ZJModbus.App.Entities
         {
             second = data;
         }
-
         public DateTime Now { get { return new DateTime(year, month, day, hour, minute, second); } }
+
+        [Description(Name = "设备时间")]
+        public string DeviceDatetime { get { return new DateTime(year, month, day, hour, minute, second).ToString("yy-MM-dd HH:mm:ss"); } }
 
     }
 }

@@ -31,14 +31,16 @@ namespace ZJModbus.App
             new byte[]{ 0x0,0x3,0x1,0x0,0x0,0x29},
             new byte[]{ 0x0,0x3,0x2,0x0,0x0,0x2A},
             new byte[]{ 0x0,0x3,0x3,0x0,0x0,0x6},
-            new byte[]{ 0x0,0x3,0x4,0x0,0x0,0x38}
+            new byte[]{ 0x0,0x3,0x4,0x0,0x0,0x38},
+            new byte[]{ 0x0,0x3,0x6,0x0,0x0,0xA}
         };
         private Type[] entityMap = {
             typeof(AlarmEntity),
             typeof(AIEntity),
             typeof(DIEntity),
             typeof(AOEntity),
-            typeof(DOEntity)
+            typeof(DOEntity),
+            typeof(BaseStatusEntity)
         };
         private ManualResetEvent note = new ManualResetEvent(true);
         private Thread worker;
@@ -150,7 +152,27 @@ namespace ZJModbus.App
 
         public void SetCtls(BaseStatusEntity entity)
         {
-            throw new NotImplementedException();
+            if (InvokeRequired)
+            {
+                this.Invoke(new Action(() => {
+                    SetCtls(entity);
+                }));
+                return;
+            }
+            LV_Base.Items.Clear();
+            var properties = entity.GetType().GetProperties();
+            foreach (var p in properties)
+            {
+                var attr = Attribute.GetCustomAttribute(p, typeof(DescriptionAttribute));
+                if (null != attr)
+                {
+                    var desc = (DescriptionAttribute)attr;
+                    if (Convert.ToBoolean(p.GetValue(entity)))
+                    {
+                        LV_Base.Items.Add(new ListViewItem(new string[] { desc.Name, string.Format("{0}", p.GetValue(entity)) }));
+                    }
+                }
+            }
         }
 
         public void SetCtls(AIEntity entity)
