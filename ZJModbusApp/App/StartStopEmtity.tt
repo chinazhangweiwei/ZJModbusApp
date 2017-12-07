@@ -1,0 +1,90 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ assembly name="System.Xml" #>
+<#@ assembly name="System.Data" #>
+
+<#@ assembly name="$(SolutionDir)App\Libs\NPinyin.dll" #>
+<#@ import namespace="System.Data" #>
+<#@ import namespace="System.Data.OleDb" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="NPinyin" #>
+
+<#@ output extension=".cs" #>
+
+<#
+    string className = "SettingEmtity";
+    string sheetName = "Setting$";
+    int index = 0;
+    string strConn = "Provider=Microsoft.Ace.OleDb.12.0;data source=E:\\c.xlsx;Extended Properties='Excel 12.0; HDR=NO; IMEX=1'";
+    OleDbConnection conn = new OleDbConnection(strConn);
+    conn.Open();
+    DataSet ds = new DataSet();
+    OleDbDataAdapter adp = new OleDbDataAdapter(string.Format("SELECT * FROM [{0}]", sheetName), conn);
+    adp.Fill(ds, sheetName);
+    conn.Close();
+#>
+using System;
+using ZhongJiaModbusApp.Attributes;
+
+
+namespace ZhongJiaModbusApp.Entities
+{
+    public class <#=className #>
+    {
+        <#    foreach(DataRow r in ds.Tables[0].Rows){
+                var s = Pinyin.GetPinyin(r[1].ToString());
+                var s1 = s.Replace(" ", "");
+				var s2 = getString(s);
+				var unit = r[2].ToString();
+				var i = Convert.ToInt32(r[3]);
+#>
+        private int <#=s1 #>;
+        [Description(Name ="<#=r[1] #>"<#if(!string.IsNullOrEmpty(unit)){#>,Unit="<#= unit #>"<#}#>)]
+        public int <#=s2 #> { get { return <#=s1 #>; } }
+        [Byte(ByteIndex =<#=index #>)]
+        public void Set<#=s2 #>(int data)
+        {
+			<#=s1 #> = <#  if(i>0){
+				switch(i){
+					case 4:
+						#>
+						data/<#= r[4].ToString() #>;
+						<#
+						break;
+                }
+			#> <# }else{ #>data; <# } #>
+        }
+        <#        
+            index++;
+        } #>
+    }
+}
+<#+
+    public string getString(string s){
+        StringBuilder sb = new StringBuilder();
+        var f = false;
+        sb.Append(s[0].ToString().ToUpper());
+            for(int i =1;i < s.Length;i++)
+            {
+                if(s[i].Equals(' '))
+                {
+                    f = true;
+                }
+                else
+                {
+                    if (f)
+                    {
+                        sb.Append(s[i].ToString().ToUpper());
+                        f = false;
+                    }
+                    else
+                    {
+                        sb.Append(s[i]);
+                    }
+                }
+            }
+        return sb.ToString();
+    }
+#>

@@ -171,5 +171,15 @@ namespace ZJModbus.App
         {
             throw new NotImplementedException();
         }
+
+        public void SetCtls(SettingEntity entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SetCtls(StartStopEntity entity)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

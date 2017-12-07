@@ -6,6 +6,7 @@ namespace ZJModbus.App.Entities
 {
     public class DIEntity
     {
+        public static readonly byte[] DATA_CMD = new byte[] { 0x0, 0x3, 0x2, 0x0, 0x0, 0x2A };
         private bool GetBoolean(int data)
         {
             return data == 0xaaaa;

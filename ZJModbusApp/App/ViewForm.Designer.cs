@@ -52,17 +52,26 @@
             this.columnHeader10 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Page_Setting = new System.Windows.Forms.TabPage();
             this.Page_BaseStatus = new System.Windows.Forms.TabPage();
-            this.Sport = new System.IO.Ports.SerialPort(this.components);
             this.LV_Base = new System.Windows.Forms.ListView();
             this.columnHeader11 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader12 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.Sport = new System.IO.Ports.SerialPort(this.components);
+            this.LV_Setting = new System.Windows.Forms.ListView();
+            this.columnHeader13 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader14 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.Page_StartStop = new System.Windows.Forms.TabPage();
+            this.LV_StartStop = new System.Windows.Forms.ListView();
+            this.columnHeader15 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader16 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tabControl1.SuspendLayout();
             this.Page_Alarm.SuspendLayout();
             this.Page_AI.SuspendLayout();
             this.Page_DI.SuspendLayout();
             this.Page_AO.SuspendLayout();
             this.Page_DO.SuspendLayout();
+            this.Page_Setting.SuspendLayout();
             this.Page_BaseStatus.SuspendLayout();
+            this.Page_StartStop.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -74,6 +83,7 @@
             this.tabControl1.Controls.Add(this.Page_DO);
             this.tabControl1.Controls.Add(this.Page_Setting);
             this.tabControl1.Controls.Add(this.Page_BaseStatus);
+            this.tabControl1.Controls.Add(this.Page_StartStop);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
@@ -258,6 +268,7 @@
             // 
             // Page_Setting
             // 
+            this.Page_Setting.Controls.Add(this.LV_Setting);
             this.Page_Setting.Location = new System.Drawing.Point(4, 22);
             this.Page_Setting.Name = "Page_Setting";
             this.Page_Setting.Size = new System.Drawing.Size(1107, 305);
@@ -300,6 +311,64 @@
             this.columnHeader12.Text = "值";
             this.columnHeader12.Width = 200;
             // 
+            // LV_Setting
+            // 
+            this.LV_Setting.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader13,
+            this.columnHeader14});
+            this.LV_Setting.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.LV_Setting.GridLines = true;
+            this.LV_Setting.Location = new System.Drawing.Point(0, 0);
+            this.LV_Setting.Name = "LV_Setting";
+            this.LV_Setting.Size = new System.Drawing.Size(1107, 305);
+            this.LV_Setting.TabIndex = 2;
+            this.LV_Setting.UseCompatibleStateImageBehavior = false;
+            this.LV_Setting.View = System.Windows.Forms.View.Details;
+            // 
+            // columnHeader13
+            // 
+            this.columnHeader13.Text = "项目";
+            this.columnHeader13.Width = 300;
+            // 
+            // columnHeader14
+            // 
+            this.columnHeader14.Text = "值";
+            // 
+            // Page_StartStop
+            // 
+            this.Page_StartStop.Controls.Add(this.LV_StartStop);
+            this.Page_StartStop.Location = new System.Drawing.Point(4, 22);
+            this.Page_StartStop.Name = "Page_StartStop";
+            this.Page_StartStop.Padding = new System.Windows.Forms.Padding(3);
+            this.Page_StartStop.Size = new System.Drawing.Size(1107, 305);
+            this.Page_StartStop.TabIndex = 7;
+            this.Page_StartStop.Text = "启停时间设置";
+            this.Page_StartStop.UseVisualStyleBackColor = true;
+            // 
+            // LV_StartStop
+            // 
+            this.LV_StartStop.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader15,
+            this.columnHeader16});
+            this.LV_StartStop.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.LV_StartStop.GridLines = true;
+            this.LV_StartStop.Location = new System.Drawing.Point(3, 3);
+            this.LV_StartStop.Name = "LV_StartStop";
+            this.LV_StartStop.Size = new System.Drawing.Size(1101, 299);
+            this.LV_StartStop.TabIndex = 4;
+            this.LV_StartStop.UseCompatibleStateImageBehavior = false;
+            this.LV_StartStop.View = System.Windows.Forms.View.Details;
+            // 
+            // columnHeader15
+            // 
+            this.columnHeader15.Text = "项目";
+            this.columnHeader15.Width = 300;
+            // 
+            // columnHeader16
+            // 
+            this.columnHeader16.Text = "值";
+            this.columnHeader16.Width = 200;
+            // 
             // ViewForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -315,7 +384,9 @@
             this.Page_DI.ResumeLayout(false);
             this.Page_AO.ResumeLayout(false);
             this.Page_DO.ResumeLayout(false);
+            this.Page_Setting.ResumeLayout(false);
             this.Page_BaseStatus.ResumeLayout(false);
+            this.Page_StartStop.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -349,5 +420,12 @@
         private System.Windows.Forms.ListView LV_Base;
         private System.Windows.Forms.ColumnHeader columnHeader11;
         private System.Windows.Forms.ColumnHeader columnHeader12;
+        private System.Windows.Forms.ListView LV_Setting;
+        private System.Windows.Forms.ColumnHeader columnHeader13;
+        private System.Windows.Forms.ColumnHeader columnHeader14;
+        private System.Windows.Forms.TabPage Page_StartStop;
+        private System.Windows.Forms.ListView LV_StartStop;
+        private System.Windows.Forms.ColumnHeader columnHeader15;
+        private System.Windows.Forms.ColumnHeader columnHeader16;
     }
 }

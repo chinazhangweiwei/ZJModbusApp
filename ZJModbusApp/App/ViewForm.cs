@@ -27,12 +27,14 @@ namespace ZJModbus.App
         private int cmd_index = 0;
         private byte[] bf;
         private byte[][] cmds = new byte[][] {
-            new byte[]{ 0x0,0x3,0x7,0xA0,0x0,0x25},
-            new byte[]{ 0x0,0x3,0x1,0x0,0x0,0x29},
-            new byte[]{ 0x0,0x3,0x2,0x0,0x0,0x2A},
-            new byte[]{ 0x0,0x3,0x3,0x0,0x0,0x6},
-            new byte[]{ 0x0,0x3,0x4,0x0,0x0,0x38},
-            new byte[]{ 0x0,0x3,0x6,0x0,0x0,0xA}
+            AlarmEntity.DATA_CMD,
+            AIEntity.DATA_CMD,
+            DIEntity.DATA_CMD,
+            AOEntity.DATA_CMD,
+            DOEntity.DATA_CMD,
+            BaseStatusEntity.DATA_CMD,
+            SettingEntity.DATA_CMD,
+            StartStopEntity.DATA_CMD,
         };
         private Type[] entityMap = {
             typeof(AlarmEntity),
@@ -40,7 +42,9 @@ namespace ZJModbus.App
             typeof(DIEntity),
             typeof(AOEntity),
             typeof(DOEntity),
-            typeof(BaseStatusEntity)
+            typeof(BaseStatusEntity),
+            typeof(SettingEntity),
+            typeof(StartStopEntity)
         };
         private ManualResetEvent note = new ManualResetEvent(true);
         private Thread worker;
@@ -62,9 +66,10 @@ namespace ZJModbus.App
             Sport.StopBits = setting.StopBit;
             Sport.DataReceived += Sport_DataReceived;
 
-            Text = string.Format("{0}号设备信息",Tag);
+            Text = string.Format("{0}号设备信息", Tag);
             device_num = Convert.ToInt32(Tag);
-            worker = new Thread(new ThreadStart(()=> {
+            worker = new Thread(new ThreadStart(() =>
+            {
                 WorkerTask();
             }));
             worker.IsBackground = true;
@@ -82,7 +87,7 @@ namespace ZJModbus.App
             LogHelper.WriteLog(type, string.Format("发送指令{0}", cmd_index));
             data_type = cmd_index;
             cmds[cmd_index][0] = (byte)deviceNum;
-            except_buffer_length = ((cmds[cmd_index][4] & 0xFF00) + cmds[cmd_index][5])*2+5;
+            except_buffer_length = ((cmds[cmd_index][4] & 0xFF00) + cmds[cmd_index][5]) * 2 + 5;
             var cmdbytes = BytesCheckService.GetCRC16Full(cmds[cmd_index], true);
             if (!Sport.IsOpen)
             {
@@ -101,7 +106,7 @@ namespace ZJModbus.App
         }
         private void Sport_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
-            if(except_buffer_length < Sport.BytesToRead)
+            if (except_buffer_length < Sport.BytesToRead)
             {
                 var type = MethodBase.GetCurrentMethod().DeclaringType;
                 Sport.Close();
@@ -109,7 +114,7 @@ namespace ZJModbus.App
                 LogHelper.WriteLog(type, "释放Note");
                 note.Set();
             }
-            else if(except_buffer_length == Sport.BytesToRead)
+            else if (except_buffer_length == Sport.BytesToRead)
             {
                 var type = MethodBase.GetCurrentMethod().DeclaringType;
                 LogHelper.WriteLog(type, string.Format("串口收到数据：{0}", except_buffer_length));
@@ -142,7 +147,7 @@ namespace ZJModbus.App
                 }
                 else
                 {
-                    LogHelper.WriteLog(type, string.Format("发生未知错误......{0}",i));
+                    LogHelper.WriteLog(type, string.Format("发生未知错误......{0}", i));
                 }
                 data_type = -1;
                 LogHelper.WriteLog(type, "释放Note");
@@ -154,7 +159,8 @@ namespace ZJModbus.App
         {
             if (InvokeRequired)
             {
-                this.Invoke(new Action(() => {
+                this.Invoke(new Action(() =>
+                {
                     SetCtls(entity);
                 }));
                 return;
@@ -179,7 +185,8 @@ namespace ZJModbus.App
         {
             if (InvokeRequired)
             {
-                this.Invoke(new Action(() => {
+                this.Invoke(new Action(() =>
+                {
                     SetCtls(entity);
                 }));
                 return;
@@ -194,7 +201,33 @@ namespace ZJModbus.App
                     var desc = (DescriptionAttribute)attr;
                     if (Convert.ToBoolean(p.GetValue(entity)))
                     {
-                        LV_AI.Items.Add(new ListViewItem(new string[] { desc.Name, string.Format("{0}{1}",p.GetValue(entity), desc.Unit) }));
+                        LV_AI.Items.Add(new ListViewItem(new string[] { desc.Name, string.Format("{0}{1}", p.GetValue(entity), desc.Unit) }));
+                    }
+                }
+            }
+        }
+
+        public void SetCtls(SettingEntity entity)
+        {
+            if (InvokeRequired)
+            {
+                this.Invoke(new Action(() =>
+                {
+                    SetCtls(entity);
+                }));
+                return;
+            }
+            LV_Setting.Items.Clear();
+            var properties = entity.GetType().GetProperties();
+            foreach (var p in properties)
+            {
+                var attr = Attribute.GetCustomAttribute(p, typeof(DescriptionAttribute));
+                if (null != attr)
+                {
+                    var desc = (DescriptionAttribute)attr;
+                    if (Convert.ToBoolean(p.GetValue(entity)))
+                    {
+                        LV_Setting.Items.Add(new ListViewItem(new string[] { desc.Name, string.Format("{0}{1}", p.GetValue(entity), desc.Unit) }));
                     }
                 }
             }
@@ -204,7 +237,8 @@ namespace ZJModbus.App
         {
             if (InvokeRequired)
             {
-                this.Invoke(new Action(() => {
+                this.Invoke(new Action(() =>
+                {
                     SetCtls(entity);
                 }));
                 return;
@@ -229,7 +263,8 @@ namespace ZJModbus.App
         {
             if (InvokeRequired)
             {
-                this.Invoke(new Action(() => {
+                this.Invoke(new Action(() =>
+                {
                     SetCtls(entity);
                 }));
                 return;
@@ -242,7 +277,7 @@ namespace ZJModbus.App
                 if (null != attr)
                 {
                     var desc = (DescriptionAttribute)attr;
-                   var str = Convert.ToBoolean(p.GetValue(entity)) ? "√" : "×";
+                    var str = Convert.ToBoolean(p.GetValue(entity)) ? "√" : "×";
                     {
                         LV_DI.Items.Add(new ListViewItem(new string[] { desc.Name, str }));
                     }
@@ -254,7 +289,8 @@ namespace ZJModbus.App
         {
             if (InvokeRequired)
             {
-                this.Invoke(new Action(() => {
+                this.Invoke(new Action(() =>
+                {
                     SetCtls(entity);
                 }));
                 return;
@@ -279,7 +315,8 @@ namespace ZJModbus.App
         {
             if (InvokeRequired)
             {
-                this.Invoke(new Action(()=> {
+                this.Invoke(new Action(() =>
+                {
                     SetCtls(entity);
                 }));
                 return;
@@ -287,20 +324,41 @@ namespace ZJModbus.App
             LV_Alarm.Items.Clear();
             var properties = entity.GetType().GetProperties();
             var now = DateTime.Now;
-            foreach(var p in properties)
+            foreach (var p in properties)
             {
                 var attr = Attribute.GetCustomAttribute(p, typeof(DescriptionAttribute));
-                if(null != attr)
+                if (null != attr)
                 {
                     var desc = (DescriptionAttribute)attr;
                     if (Convert.ToBoolean(p.GetValue(entity)))
                     {
-                        LV_Alarm.Items.Add(new ListViewItem(new string[] { desc.Name, string.Format("{0:HH:mm:ss}", now) }) );
+                        LV_Alarm.Items.Add(new ListViewItem(new string[] { desc.Name, string.Format("{0:HH:mm:ss}", now) }));
                     }
                 }
             }
         }
 
-        
+        public void SetCtls(StartStopEntity entity)
+        {
+            if (InvokeRequired)
+            {
+                this.Invoke(new Action(() =>
+                {
+                    SetCtls(entity);
+                }));
+                return;
+            }
+            LV_StartStop.Items.Clear();
+            var properties = entity.GetType().GetProperties();
+            foreach (var p in properties)
+            {
+                var attr = Attribute.GetCustomAttribute(p, typeof(DescriptionAttribute));
+                if (null != attr)
+                {
+                    var desc = (DescriptionAttribute)attr;
+                    LV_StartStop.Items.Add(new ListViewItem(new string[] { desc.Name, p.GetValue(entity).ToString() }));
+                }
+            }
+        }
     }
 }

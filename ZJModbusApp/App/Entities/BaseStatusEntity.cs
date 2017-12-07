@@ -3,8 +3,10 @@ using ZJModbus.App.Attributes;
 
 namespace ZJModbus.App.Entities
 {
+    
     public class BaseStatusEntity
     {
+        public static readonly byte[] DATA_CMD = new byte[] { 0x0, 0x3, 0x6, 0x0, 0x0, 0xA };
         public enum FuelType
         {
             油气 = 0,

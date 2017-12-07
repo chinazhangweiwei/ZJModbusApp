@@ -6,6 +6,8 @@ namespace ZJModbus.App.Entities
 {
     public class AOEntity
     {
+        public static readonly byte[] DATA_CMD = new byte[] { 0x0, 0x3, 0x3, 0x0, 0x0, 0x6 };
+        
         private int ranshaoshuchuliang;
         [Description(Name = "燃烧输出量", Unit = "%")]
         public int RanShaoShuChuLiang { get { return ranshaoshuchuliang; } }

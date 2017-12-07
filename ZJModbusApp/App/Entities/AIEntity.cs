@@ -6,6 +6,8 @@ namespace ZJModbus.App.Entities
 {
     public class AIEntity
     {
+        public static readonly byte[] DATA_CMD = new byte[]{ 0x0, 0x3, 0x1, 0x0, 0x0, 0x29 };
+
         private int bentipaiyanwendu;
         [Description(Name = "本体排烟温度", Unit = "℃")]
         public int BenTiPaiYanWenDu { get { return bentipaiyanwendu; } }

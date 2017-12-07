@@ -22,6 +22,8 @@ namespace ZJModbus.App.Tools
             void SetCtls(DOEntity entity);
 
             void SetCtls(AlarmEntity entity);
+            void SetCtls(SettingEntity entity);
+            void SetCtls(StartStopEntity entity);
         }
         
         public static void Adapter(int dataType, byte[] data, SetFormCtls action)

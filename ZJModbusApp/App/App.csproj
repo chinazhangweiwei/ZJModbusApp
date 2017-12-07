@@ -48,6 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entities\StartStopEntity.cs" />
     <Compile Include="AppForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -56,6 +57,7 @@
     </Compile>
     <Compile Include="Attributes\ByteAttribute.cs" />
     <Compile Include="Attributes\DescriptionAttribute.cs" />
+    <Compile Include="Entities\SettingEntity.cs" />
     <Compile Include="Entities\AIEntity.cs" />
     <Compile Include="Entities\AlarmEntity.cs" />
     <Compile Include="Entities\AOEntity.cs" />
@@ -122,6 +124,16 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="StartStopEmtity.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>StartStopEmtity.cs</LastGenOutput>
+    </Content>
+    <Content Include="Libs\NPinyin.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
