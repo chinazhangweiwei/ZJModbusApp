@@ -6,7 +6,7 @@ namespace ZJModbus.App.Entities
     
     public class BaseStatusEntity
     {
-        public static readonly byte[] DATA_CMD = new byte[] { 0x0, 0x3, 0x6, 0x0, 0x0, 0xA };
+        public static readonly byte[] DATA_CMD = new byte[] { 0x0, 0x3, 0x6, 0x0, 0x0, 0xB };
         public enum FuelType
         {
             油气 = 0,
@@ -70,7 +70,7 @@ namespace ZJModbus.App.Entities
         [Byte(ByteIndex = 4)]
         public void SetYear(int data)
         {
-            year = data;
+            year = 2000+data;
         }
         [Byte(ByteIndex = 5)]
         public void SetMonth(int data)
@@ -100,7 +100,7 @@ namespace ZJModbus.App.Entities
         public DateTime Now { get { return new DateTime(year, month, day, hour, minute, second); } }
 
         [Description(Name = "设备时间")]
-        public string DeviceDatetime { get { return new DateTime(year, month, day, hour, minute, second).ToString("yy-MM-dd HH:mm:ss"); } }
+        public string DeviceDatetime { get { return Now.ToString("yy-MM-dd HH:mm:ss"); } }
 
     }
 }

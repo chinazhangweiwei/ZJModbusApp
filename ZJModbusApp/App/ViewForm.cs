@@ -19,13 +19,12 @@ namespace ZJModbus.App
         private const int BUFFER_LENGTH = 1024;
         private const int ERROR_COMMAND_NOT_EXIST = 1;
         private const int ERROR_MEMORY_ADDRESS_OUT_OF_RANGE = 2;
-        private const int SLEEP_LENGTH = 60000;
+        private const int SLEEP_LENGTH = 600000;
         private int device_num = -1;
-        private int buffer_length = 0;
+        //private int buffer_length = 0;
         private int except_buffer_length = 0;
         private int data_type = -1;
         private int cmd_index = 0;
-        private byte[] bf;
         private byte[][] cmds = new byte[][] {
             AlarmEntity.DATA_CMD,
             AIEntity.DATA_CMD,
@@ -57,8 +56,6 @@ namespace ZJModbus.App
         }
         private void ViewForm_Load(object sender, EventArgs e)
         {
-            bf = new byte[BUFFER_LENGTH];
-
             var setting = AppSetting.Load();
             Sport.PortName = setting.PortName;
             Sport.Parity = setting.Parity;
@@ -118,7 +115,8 @@ namespace ZJModbus.App
             {
                 var type = MethodBase.GetCurrentMethod().DeclaringType;
                 LogHelper.WriteLog(type, string.Format("串口收到数据：{0}", except_buffer_length));
-                buffer_length = Sport.Read(bf, 0, BUFFER_LENGTH);
+                byte[] bf = new byte[Sport.BytesToRead];
+                Sport.Read(bf, 0, Sport.BytesToRead);
                 FormByteAdapter.Adapter(data_type, bf, this);
                 LogHelper.WriteLog(type, "数据解析完毕");
                 cmd_index++;
@@ -131,7 +129,8 @@ namespace ZJModbus.App
                 var type = MethodBase.GetCurrentMethod().DeclaringType;
                 LogHelper.WriteLog(type, "串口返回错误信息");
                 //命令错误
-                buffer_length = Sport.Read(bf, 0, BUFFER_LENGTH);
+                byte[] bf = new byte[Sport.BytesToRead];
+                Sport.Read(bf, 0, 5);
                 int i = bf[2] & 0xFF;
                 if (ERROR_COMMAND_NOT_EXIST == i)
                 {
@@ -173,10 +172,7 @@ namespace ZJModbus.App
                 if (null != attr)
                 {
                     var desc = (DescriptionAttribute)attr;
-                    if (Convert.ToBoolean(p.GetValue(entity)))
-                    {
-                        LV_Base.Items.Add(new ListViewItem(new string[] { desc.Name, string.Format("{0}", p.GetValue(entity)) }));
-                    }
+                    LV_Base.Items.Add(new ListViewItem(new string[] { desc.Name, string.Format("{0}", p.GetValue(entity)) }));
                 }
             }
         }

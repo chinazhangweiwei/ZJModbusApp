@@ -5,7 +5,7 @@ namespace ZJModbus.App.Entities
 {
     public class AlarmEntity
     {
-        public static readonly byte[] DATA_CMD = new byte[] { 0x0, 0x3, 0x2, 0x0, 0x0, 0x2A };
+        public static readonly byte[] DATA_CMD = new byte[] { 0x0, 0x3, 0x7, 0xA0, 0x0, 0x24 };
         private bool GetBoolean(int data)
         {
             return data == 0xaaaa;
